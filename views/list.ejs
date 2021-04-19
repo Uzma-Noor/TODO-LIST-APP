@@ -1,0 +1,37 @@
+<%- include("header") -%>
+    <div class="box" id = "heading">
+      <h1> <%= listTitle %> </h1>
+    </div>
+    <div class="box">
+
+      <% newTodos.forEach(function(item){ %>
+        <form method="post" action = "/delete">
+          <div class="item">
+            <input type="checkbox" name="checkbox" autocomplete="off" onchange="this.form.submit()" value = "<%= item._id %>">
+            <p name = "item"> <%= item.name %> </p>
+          </div>
+          <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+        </form>
+      <%});%>
+
+      <form class = "item" action = "/" method="post">
+        <input type="text" placeholder="Enter the item" name = "newItem">
+        <button type="submit" name = "button" value = <%= listTitle %>>+</button>
+      </form>
+    </div>
+    <% if (listTitle == "Today") { %>
+      <div class = "box" id = "heading">
+        <h1> Go to other Lists </h1>
+      </div>
+      <div class="box">
+          <% allLists.forEach(function(list){%>
+            <form class = "item" method="post" action = "/redirect">
+              <div class="item">
+                <input type="checkbox" name="url" autocomplete="off" onchange="this.form.submit()" value = "<%= list.name %>">
+                <div name = "item"> <%= list.name %> </div>
+              </div>
+            </form>
+          <%})%>
+      </div>
+    <%}%>
+<%- include("footer") -%>
